@@ -4,7 +4,7 @@
 #include "BLE2902.h"
 #include "BLEHIDDevice.h"
 
-// #define ENABLED_LOGICAL_VALUE_2BYTE
+#define ENABLED_LOGICAL_VALUE_2BYTE
 
 BLEHIDDevice* hid;
 BLECharacteristic* input;
@@ -15,8 +15,8 @@ bool deviceConnected = false;
 uint16_t buttons = 0;
 
 #ifdef ENABLED_LOGICAL_VALUE_2BYTE
-int16_t leftStickX = 0, leftStickY = 0;
-int16_t rightStickX = 0, rightStickY = 0;
+uint16_t leftStickX = 0, leftStickY = 0;
+uint16_t rightStickX = 0, rightStickY = 0;
 #else
 int8_t leftStickX = 0, leftStickY = 0;
 int8_t rightStickX = 0, rightStickY = 0;
@@ -78,8 +78,8 @@ void setup() {
         0x09, 0x32,        //   Usage (X)  - 右スティックX
         0x09, 0x33,        //   Usage (Y) - 右スティックY
 #ifdef ENABLED_LOGICAL_VALUE_2BYTE
-        0x15, 0x00, 0x80,  //   Logical Minimum  (-32768)
-        0x25, 0xFF, 0x7F,  //   Logical Maximum  (32767)
+        0x15, 0x00, 0x00,  //   Logical Minimum  (0)
+        0x26, 0xFF, 0xFF,  //   Logical Maximum  (65535)
         0x75, 0x10,        //   Report Size (16)
 #else
         0x15, 0x81,        //   Logical Minimum (-127)
@@ -113,10 +113,10 @@ void updateGamepadState() {
     // ジョイスティックの位置を円を描くように更新
     static float angle = 0;
 #ifdef ENABLED_LOGICAL_VALUE_2BYTE
-    leftStickX = static_cast<int16_t>(32767 * cos(angle));
-    leftStickY = static_cast<int16_t>(32767 * sin(angle));
-    rightStickX = static_cast<int16_t>(32767 * cos(angle + PI / 2));
-    rightStickY = static_cast<int16_t>(32767 * sin(angle + PI / 2));
+    leftStickX = static_cast<uint16_t>(32767 * cos(angle));
+    leftStickY = static_cast<uint16_t>(32767 * sin(angle));
+    rightStickX = static_cast<uint16_t>(32767 * cos(angle + PI / 2));
+    rightStickY = static_cast<uint16_t>(32767 * sin(angle + PI / 2));
 #else
     leftStickX = static_cast<int8_t>(127 * cos(angle));
     leftStickY = static_cast<int8_t>(127 * sin(angle));
