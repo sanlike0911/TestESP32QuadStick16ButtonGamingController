@@ -4,7 +4,7 @@
 #include "BLE2902.h"
 #include "BLEHIDDevice.h"
 
-#define ENABLED_LOGICAL_VALUE_2BYTE
+// #define ENABLED_LOGICAL_VALUE_2BYTE
 
 BLEHIDDevice* hid;
 BLECharacteristic* input;
@@ -75,8 +75,8 @@ void setup() {
         0x05, 0x01,        //   Usage Page (Generic Desktop Ctrls)
         0x09, 0x30,        //   Usage (X)  - 左スティックX
         0x09, 0x31,        //   Usage (Y)  - 左スティックY
-        0x09, 0x32,        //   Usage (X)  - 右スティックX
-        0x09, 0x33,        //   Usage (Y) - 右スティックY
+        0x09, 0x32,        //   Usage (Z)  - 右スティックX
+        0x09, 0x35,        //   Usage (Rz) - 右スティックY
 #ifdef ENABLED_LOGICAL_VALUE_2BYTE
         0x15, 0x00, 0x00,  //   Logical Minimum  (0)
         0x26, 0xFF, 0xFF,  //   Logical Maximum  (65535)
